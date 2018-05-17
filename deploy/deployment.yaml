@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sns-publisher
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sns-publisher
+        version: v1
+    spec:
+      containers:
+      - image: xxx/scraly/sns-publisher:0.1.0
+        imagePullPolicy: IfNotPresent
+        name: sns-publisher
+        ports:
+        - containerPort: 14083
+        env:
+          - name: SNS_TOPIC
+            value: "scraly"
+          - name: AWS_REGION
+            value: "eu-central-1"
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: aws-access
+                key: aws_access_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-access
+                key: aws_secret_access_key

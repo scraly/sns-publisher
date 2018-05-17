@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sns-publisher
+  name: sns-publisher
+spec:
+  selector:
+    app: sns-publisher
+  ports:
+  - port: 14083
+    targetPort: 14083
